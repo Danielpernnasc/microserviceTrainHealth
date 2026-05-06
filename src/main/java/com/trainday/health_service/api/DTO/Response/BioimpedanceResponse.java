@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 
-
-
 public record BioimpedanceResponse(
     String  athleteId,
     Double weight,
@@ -18,17 +16,4 @@ public record BioimpedanceResponse(
     Double get,
     ActivityLevel activityLevel,
     LocalDateTime avaliationDate      
-
-
-) {
-
-  
-//    public void Bioimpedance(String athleteId, Double weight, Double height, Double bodyFatPercentage, 
-//     Double bodyLeanMassPercentage, Double imc, Double LeanMass, Double tmb, Double get, ActivityLevel activityLevel, LocalDateTime avavliationDate  ){
-//    }
-    
-
-
-
-
-}
+) {}

@@ -51,6 +51,29 @@ public class BioimpendanceService {
         );
     }
 
+    public Bioimpedance patch(String id, Bioimpedance req){
+       Bioimpedance bio = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException(Bio_not_found));
+
+        if(req.getWeight() != null){
+            bio.setWeight(req.getWeight());
+        }
+
+        if(req.getHeight() != null){
+            bio.setHeight(req.getHeight());
+        }
+
+        if(req.getBodyFatPercentage() != null){
+            bio.setBodyFatPercentage(req.getBodyFatPercentage());
+        }
+
+        if(req.getBodyLeanMassPercentage() != null){
+            bio.setBodyLeanMassPercentage(req.getBodyLeanMassPercentage());
+        }
+        calculateAll(bio); 
+        return repository.save(bio);
+    }
+
     public Bioimpedance update(String id, BioimpedanceRequest req){
         Bioimpedance bio = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException(Bio_not_found + id));
