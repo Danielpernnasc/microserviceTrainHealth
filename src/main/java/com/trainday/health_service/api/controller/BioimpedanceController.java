@@ -7,6 +7,7 @@ import com.trainday.health_service.api.DTO.Request.BioimpedanceRequest;
 import com.trainday.health_service.api.DTO.Response.BioimpedanceResponse;
 import com.trainday.health_service.aplication.service.BioimpendanceService;
 import com.trainday.health_service.domain.models.Bioimpedance;
+import com.trainday.health_service.infra.security.JwtService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -31,11 +32,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class BioimpedanceController {
 
     private final BioimpendanceService service;
+    private final JwtService jwtService;
 
     private static final Logger log = LoggerFactory.getLogger(BioimpendanceService.class);
     
-    public BioimpedanceController(BioimpendanceService service){
+    public BioimpedanceController(
+        BioimpendanceService service,
+        JwtService jwtService
+    ){
         this.service = service;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
@@ -44,8 +50,9 @@ public class BioimpedanceController {
         @RequestHeader("Authorization") String authHeader) {
             log.info("Receive request to create bio: {}", req);
             String token = authHeader.substring(7);
-            //String athleteId = jwtService.extractEmail(token)
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.create(req));
+            String athleteId = jwtService.extractEmail(token);
+            Bioimpedance creatBioimpedance = service.create(req, athleteId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(creatBioimpedance);
     }
 
     @GetMapping("/{id}")

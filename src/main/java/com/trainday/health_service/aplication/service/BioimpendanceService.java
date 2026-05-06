@@ -18,7 +18,7 @@ public class BioimpendanceService {
         this.repository = repository;
     }
 
-    public Bioimpedance create(BioimpedanceRequest req){
+    public Bioimpedance create(BioimpedanceRequest req, String AthleteId){
 
         Bioimpedance bio = new Bioimpedance();
         bio.setAthleteId(req.athleteId());
