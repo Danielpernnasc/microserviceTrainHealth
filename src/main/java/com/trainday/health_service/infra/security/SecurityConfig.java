@@ -47,8 +47,9 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.POST, HEALTYSERVICEPOSTBIO).authenticated()
                 .requestMatchers(HttpMethod.GET, HEALTYSERVICEGETBIO).permitAll()
-                .requestMatchers(HttpMethod.GET, HEALTYSERVICEPATCH).authenticated()
+                .requestMatchers(HttpMethod.PATCH, HEALTYSERVICEPATCH).authenticated()
                 .requestMatchers(HttpMethod.PUT, HEALTYSERVICEPUT).authenticated()
+
 
                 .anyRequest().authenticated()
         )

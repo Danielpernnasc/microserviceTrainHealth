@@ -1,7 +1,5 @@
 package com.trainday.health_service.api.DTO.Request;
 
-import java.time.LocalDateTime;
-
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 
 public record BioimpedanceRequest(
@@ -12,5 +10,6 @@ public record BioimpedanceRequest(
     Double bodyLeanMassPercentage,
     Double imc,
     Double leanMass,  
+    Double fatMass,
     ActivityLevel activityLevel
 ) {}

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 
 import lombok.AllArgsConstructor;

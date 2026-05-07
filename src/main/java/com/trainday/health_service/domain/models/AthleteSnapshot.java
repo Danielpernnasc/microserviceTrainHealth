@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class AthleteSnapshot {
    private String athletaId;
     private String name;
+    private String cpf;
     private Integer age;
     private String gender;
     private String genderIdentity;

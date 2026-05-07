@@ -3,30 +3,53 @@ package com.trainday.health_service.aplication.service;
 import org.springframework.stereotype.Service;
 
 import com.trainday.health_service.api.DTO.Request.BioimpedanceRequest;
+import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 import com.trainday.health_service.api.DTO.Response.BioimpedanceResponse;
+import com.trainday.health_service.domain.models.AthleteSnapshot;
 import com.trainday.health_service.domain.models.Bioimpedance;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 import com.trainday.health_service.domain.repository.BioimpedanceRepository;
+import com.trainday.health_service.infra.client.AthleteClient;
 
 @Service
 public class BioimpendanceService {
 
     private final BioimpedanceRepository repository;
+    private final AthleteClient athleteClient;
     private static final String Bio_not_found = "Biopedância não econtrada!";
 
-    public BioimpendanceService(BioimpedanceRepository repository){
+    public BioimpendanceService(BioimpedanceRepository repository, AthleteClient athleteClient){
         this.repository = repository;
+        this.athleteClient = athleteClient;
     }
 
-    public Bioimpedance create(BioimpedanceRequest req, String AthleteId){
+    public Bioimpedance create(BioimpedanceRequest req, String token){
+
+        AthleteSnapshotResponse athlete =
+            athleteClient.findById(
+                    req.athleteId(),
+                    token
+            );
+
+        AthleteSnapshot athleteSnapshot = new AthleteSnapshot();
+        athleteSnapshot.setAthletaId(athlete.athleteId());
+        athleteSnapshot.setCpf(athlete.cpf());
+        athleteSnapshot.setName(athlete.name());
+        athleteSnapshot.setAge(athlete.age());
+        athleteSnapshot.setGender(athlete.gender());
+        athleteSnapshot.setGenderIdentity(athlete.identity());
+        athleteSnapshot.setWeight(athlete.weight());
+        athleteSnapshot.setHeight(athlete.height());
 
         Bioimpedance bio = new Bioimpedance();
         bio.setAthleteId(req.athleteId());
+        bio.setAthlete(athleteSnapshot);
         bio.setWeight(req.weight());
         bio.setHeight(req.height());
         bio.setBodyFatPercentage(req.bodyFatPercentage());
         bio.setBodyLeanMassPercentage(req.bodyLeanMassPercentage());
         bio.setActivityLevel(req.activityLevel());
+        
         calculateAll(bio);
 
         return repository.save(bio);
@@ -89,13 +112,25 @@ public class BioimpendanceService {
 
     private void calculateAll(Bioimpedance bio){
         bio.setImc(calcImc(bio.getWeight(), bio.getHeight()));
+        if(bio.getBodyFatPercentage() != null 
+            && bio.getBodyFatPercentage() > 0) {
+                bio.setLeanMass(
+                    calcLeanMass(
+                        bio.getWeight(),
+                        bio.getBodyFatPercentage()
+                    )
+                );
+                bio.setFatMass(
+                    calcFatMass(
+                        bio.getWeight(),
+                        bio.getBodyFatPercentage()
+                    )
+                );
+            }
         bio.setLeanMass(calcLeanMass(bio.getWeight(), bio.getBodyFatPercentage()));
         bio.setFatMass(calcFatMass(bio.getWeight(), bio.getBodyFatPercentage()));
         bio.setTmb(calcTmb(bio.getWeight(), bio.getHeight()));
         bio.setGet(calcGet(bio.getTmb(), bio.getActivityLevel()));
-
-
-
     }
 
     private Double calcImc(Double weight, Double height){

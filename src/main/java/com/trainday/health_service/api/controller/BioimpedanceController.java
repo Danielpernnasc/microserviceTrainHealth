@@ -51,8 +51,9 @@ public class BioimpedanceController {
             log.info("Receive request to create bio: {}", req);
             String token = authHeader.substring(7);
             String athleteId = jwtService.extractEmail(token);
-            Bioimpedance creatBioimpedance = service.create(req, athleteId);
-            return ResponseEntity.status(HttpStatus.CREATED).body(creatBioimpedance);
+            Bioimpedance creatBioimpedance = service.create(req, authHeader);
+               return ResponseEntity.status(HttpStatus.CREATED)
+            .body(creatBioimpedance);
     }
 
     @GetMapping("/{id}")
