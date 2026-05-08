@@ -8,12 +8,15 @@ public record BioimpedanceResponse(
     String  athleteId,
     Double weight,
     Double height, 
-    Double bodyFatPercentage,
-    Double bodyLeanMassPercentage,
+    Integer bodyFatPercentage,
+    Integer bodyLeanMassPercentage,
     Double imc,
     Double leanMass,  
     Double tmb,       
     Double get,
     ActivityLevel activityLevel,
     LocalDateTime avaliationDate      
-) {}
+) {
+  
+}
+

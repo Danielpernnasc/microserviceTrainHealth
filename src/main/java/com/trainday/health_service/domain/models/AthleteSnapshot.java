@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AthleteSnapshot {
-   private String athletaId;
     private String name;
     private String cpf;
     private Integer age;

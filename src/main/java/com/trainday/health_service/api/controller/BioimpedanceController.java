@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
 @RestController
 @RequestMapping("/bioimpedance")
 @SecurityRequirement(name = "bearerAuth")
@@ -51,27 +49,18 @@ public class BioimpedanceController {
             log.info("Receive request to create bio: {}", req);
             String token = authHeader.substring(7);
             String athleteId = jwtService.extractEmail(token);
-            Bioimpedance creatBioimpedance = service.create(req, authHeader);
+            Bioimpedance creatBioimpedance = service.create(req, athleteId);
                return ResponseEntity.status(HttpStatus.CREATED)
             .body(creatBioimpedance);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BioimpedanceResponse> findById(
+    public ResponseEntity<Bioimpedance> findById(
         @PathVariable String id
     ){
         return ResponseEntity.ok(service.getBioById(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Bioimpedance> updateBioimpedance(
-        @PathVariable String id, 
-        @RequestBody BioimpedanceRequest req) {
-    
-        return ResponseEntity.ok(service.update(id, req));
-    }
-
-    
     @PatchMapping("/{id}") 
     public ResponseEntity<Bioimpedance> patchBioimpedance(@PathVariable String id, @RequestBody Bioimpedance req){
         Bioimpedance bio = service.patch(id, req);

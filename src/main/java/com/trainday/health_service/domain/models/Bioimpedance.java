@@ -6,7 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 
 import lombok.AllArgsConstructor;
@@ -26,8 +25,8 @@ public class Bioimpedance {
 
     private Double weight; //kg;
     private Double height; //cm
-    private Double bodyFatPercentage;
-    private Double bodyLeanMassPercentage;
+    private Integer bodyFatPercentage; //%
+    private Integer bodyLeanMassPercentage; //%
 
     private Double imc;
     private Double leanMass;  // kg
