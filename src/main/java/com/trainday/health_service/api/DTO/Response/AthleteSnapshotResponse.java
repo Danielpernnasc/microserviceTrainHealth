@@ -1,6 +1,7 @@
 package com.trainday.health_service.api.DTO.Response;
 
 public record AthleteSnapshotResponse(
+    String id,
     String cpf,
     String name,
     String email,
@@ -10,5 +11,7 @@ public record AthleteSnapshotResponse(
     Double height,
     Double weight
 ) {
+
+  
    
 }

@@ -18,6 +18,8 @@ public interface AthleteClient {
         AthleteSnapshotResponse findById(
             @PathVariable String id,
             @RequestHeader("Authorization") String token);
+
+      
     
 
 }

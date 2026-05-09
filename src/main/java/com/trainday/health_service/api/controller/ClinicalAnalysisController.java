@@ -2,7 +2,6 @@ package com.trainday.health_service.api.controller;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainday.health_service.api.DTO.Request.ClinicalAnalysisRequest;
@@ -10,8 +9,6 @@ import com.trainday.health_service.aplication.service.BioimpendanceService;
 import com.trainday.health_service.aplication.service.ClinicalAnalysisService;
 import com.trainday.health_service.domain.models.ClinicalAnalysis;
 import com.trainday.health_service.infra.security.JwtService;
-
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -26,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @RestController
 @RequestMapping("/clinicalAnalysis")
@@ -68,13 +62,18 @@ public class ClinicalAnalysisController {
         return ResponseEntity.ok(service.getAnalysisClinicalById(id));
     }
 
-    @GetMapping("/analysisClinicas/athlete/{athleteId}")
+    @GetMapping("/athlete/{athleteId}")
     public ResponseEntity<List<ClinicalAnalysis>> getAnalysisClinical(
          @PathVariable String athleteId
     ){
         return ResponseEntity.ok(
             service.getAnalysisClinical(athleteId)
         );
+    }
+
+    @GetMapping("/cpf/{cpf}")
+    public List<ClinicalAnalysis> findByCpf(@PathVariable String cpf) {
+        return service.getBioByCpf(cpf);
     }
     
     

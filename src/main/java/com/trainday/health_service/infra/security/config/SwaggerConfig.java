@@ -1,4 +1,4 @@
-package com.trainday.health_service.infra.security;
+package com.trainday.health_service.infra.security.config;
 
 import org.springframework.context.annotation.Configuration;
 

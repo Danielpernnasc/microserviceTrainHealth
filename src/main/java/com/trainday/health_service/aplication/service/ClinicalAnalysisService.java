@@ -8,6 +8,7 @@ import com.trainday.health_service.api.DTO.Request.ClinicalAnalysisRequest;
 import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 import com.trainday.health_service.domain.models.AthleteSnapshot;
 import com.trainday.health_service.domain.models.ClinicalAnalysis;
+import com.trainday.health_service.domain.repository.AthleteSnapshotRepository;
 import com.trainday.health_service.domain.repository.ClinicalAnalysisRepository;
 import com.trainday.health_service.infra.client.AthleteClient;
 
@@ -16,12 +17,17 @@ public class ClinicalAnalysisService {
 
     private final ClinicalAnalysisRepository repository;
     private final AthleteClient athleteClient;
-        private static final String AnalysisClinical_not_found = "Análise Clinicas não econtrada!";
+    private final AthleteSnapshotRepository athleteRepository;
+    private static final String AnalysisClinical_not_found = "Análise Clinicas não econtrada!";
 
-    public ClinicalAnalysisService(ClinicalAnalysisRepository repository, AthleteClient athleteClient){
+    public ClinicalAnalysisService(
+        ClinicalAnalysisRepository repository, 
+        AthleteSnapshotRepository athleteRepository,
+        AthleteClient athleteClient){
         this.repository = repository;
+        this.athleteRepository = athleteRepository;
         this.athleteClient = athleteClient;
-        
+     
     }
 
 
@@ -89,6 +95,12 @@ public class ClinicalAnalysisService {
     public List<ClinicalAnalysis> getAnalysisClinical(String athleteId){
         return repository.findByAthleteId(athleteId);
               
+    }
+
+    public List<ClinicalAnalysis> getBioByCpf(String cpf){
+        AthleteSnapshot athlete = athleteRepository.findByCpf(cpf)
+             .orElseThrow(() -> new RuntimeException("Athlete not found"));
+        return repository.findByAthleteId(athlete.getCpf());
     }
 
 }

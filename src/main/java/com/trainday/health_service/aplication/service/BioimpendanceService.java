@@ -1,5 +1,6 @@
 package com.trainday.health_service.aplication.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -9,23 +10,32 @@ import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 import com.trainday.health_service.domain.models.AthleteSnapshot;
 import com.trainday.health_service.domain.models.Bioimpedance;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
+import com.trainday.health_service.domain.repository.AthleteSnapshotRepository;
 import com.trainday.health_service.domain.repository.BioimpedanceRepository;
 import com.trainday.health_service.infra.client.AthleteClient;
+import com.trainday.health_service.infra.client.AthleteClientService;
 
 @Service
 public class BioimpendanceService {
 
     private final BioimpedanceRepository repository;
     private final AthleteClient athleteClient;
+    private final AthleteClientService athleteclienteService;
     private static final String Bio_not_found = "Biopedância não econtrada!";
 
-    public BioimpendanceService(BioimpedanceRepository repository, AthleteClient athleteClient){
+    public BioimpendanceService(
+        BioimpedanceRepository repository, 
+        AthleteClient athleteClient,
+        AthleteClientService athleteClientService){
         this.repository = repository;
+        this.athleteclienteService = athleteClientService;
         this.athleteClient = athleteClient;
+
     }
 
-    public Bioimpedance create(BioimpedanceRequest req, String token){
+   
 
+    public Bioimpedance create(BioimpedanceRequest req, String token){
         AthleteSnapshotResponse athlete =
             athleteClient.findById(
                     req.athleteId(),
@@ -40,6 +50,7 @@ public class BioimpendanceService {
         athleteSnapshot.setGenderIdentity(athlete.identity());
         athleteSnapshot.setWeight(athlete.weight());
         athleteSnapshot.setHeight(athlete.height());
+      
 
         Bioimpedance bio = new Bioimpedance();
         bio.setAthleteId(req.athleteId());
@@ -55,9 +66,17 @@ public class BioimpendanceService {
         return repository.save(bio);
     }
 
+
+
     public Bioimpedance getBioById(String id){
        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException(Bio_not_found  + id));
+    }
+
+    public List<Bioimpedance> getBioByCpf(String cpf){
+        
+        AthleteSnapshotResponse athlete = athleteclienteService.findByCpf(cpf);
+          return repository.findByAthleteId(athlete.id());
     }
 
     public Bioimpedance patch(String id, Bioimpedance req){

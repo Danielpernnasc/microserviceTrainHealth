@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trainday.health_service.api.DTO.Request.BioimpedanceRequest;
-import com.trainday.health_service.api.DTO.Response.BioimpedanceResponse;
 import com.trainday.health_service.aplication.service.BioimpendanceService;
 import com.trainday.health_service.domain.models.Bioimpedance;
 import com.trainday.health_service.infra.security.JwtService;
@@ -12,6 +11,9 @@ import com.trainday.health_service.infra.security.JwtService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 @RestController
 @RequestMapping("/bioimpedance")
@@ -60,6 +64,12 @@ public class BioimpedanceController {
     ){
         return ResponseEntity.ok(service.getBioById(id));
     }
+
+    @GetMapping("/cpf/{cpf}")
+    public List<Bioimpedance> findByCpf(@PathVariable String cpf) {
+        return service.getBioByCpf(cpf);
+    }
+    
 
     @PatchMapping("/{id}") 
     public ResponseEntity<Bioimpedance> patchBioimpedance(@PathVariable String id, @RequestBody Bioimpedance req){
