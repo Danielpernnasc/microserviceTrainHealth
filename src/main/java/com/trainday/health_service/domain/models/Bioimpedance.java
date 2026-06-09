@@ -20,7 +20,7 @@ public class Bioimpedance {
     @Id
     private String id;
 
-    private String athleteId;
+    private String cpfAhtlete;
     private AthleteSnapshot athlete;
 
     private Double weight; //kg;

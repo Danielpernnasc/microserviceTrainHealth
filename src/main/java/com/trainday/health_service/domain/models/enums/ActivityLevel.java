@@ -31,6 +31,8 @@ public enum ActivityLevel {
         }
         throw new IllegalArgumentException("AnalysisStatus invalid: " + value);
     }
+
+    
     
 
 

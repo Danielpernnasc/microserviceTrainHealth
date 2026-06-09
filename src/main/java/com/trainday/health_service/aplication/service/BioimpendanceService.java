@@ -1,7 +1,7 @@
 package com.trainday.health_service.aplication.service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 import com.trainday.health_service.domain.models.AthleteSnapshot;
 import com.trainday.health_service.domain.models.Bioimpedance;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
-import com.trainday.health_service.domain.repository.AthleteSnapshotRepository;
+
 import com.trainday.health_service.domain.repository.BioimpedanceRepository;
 import com.trainday.health_service.infra.client.AthleteClient;
 import com.trainday.health_service.infra.client.AthleteClientService;
@@ -20,7 +20,7 @@ public class BioimpendanceService {
 
     private final BioimpedanceRepository repository;
     private final AthleteClient athleteClient;
-    private final AthleteClientService athleteclienteService;
+    private final AthleteClientService athleteclientService;
     private static final String Bio_not_found = "Biopedância não econtrada!";
 
     public BioimpendanceService(
@@ -28,7 +28,7 @@ public class BioimpendanceService {
         AthleteClient athleteClient,
         AthleteClientService athleteClientService){
         this.repository = repository;
-        this.athleteclienteService = athleteClientService;
+        this.athleteclientService = athleteClientService;
         this.athleteClient = athleteClient;
 
     }
@@ -37,8 +37,8 @@ public class BioimpendanceService {
 
     public Bioimpedance create(BioimpedanceRequest req, String token){
         AthleteSnapshotResponse athlete =
-            athleteClient.findById(
-                    req.athleteId(),
+            athleteClient.findByCpf(
+                    req.cpfAhtlete(),
                     token
             );
 
@@ -53,7 +53,7 @@ public class BioimpendanceService {
       
 
         Bioimpedance bio = new Bioimpedance();
-        bio.setAthleteId(req.athleteId());
+        bio.setCpfAhtlete(req.cpfAhtlete());
         bio.setAthlete(athleteSnapshot);
         bio.setWeight(req.weight());
         bio.setHeight(req.height());
@@ -74,9 +74,16 @@ public class BioimpendanceService {
     }
 
     public List<Bioimpedance> getBioByCpf(String cpf){
+  
         
-        AthleteSnapshotResponse athlete = athleteclienteService.findByCpf(cpf);
-          return repository.findByAthleteId(athlete.id());
+     AthleteSnapshotResponse athlete =
+        athleteclientService.findByCpf(cpf);
+
+      if (athlete == null || athlete.cpf() == null) {
+        throw new RuntimeException("Athlete not found");
+    }
+
+    return repository.findByAthleteCpf(athlete.cpf());
     }
 
     public Bioimpedance patch(String id, Bioimpedance req){

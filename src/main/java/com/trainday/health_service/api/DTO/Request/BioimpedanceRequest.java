@@ -3,7 +3,7 @@ package com.trainday.health_service.api.DTO.Request;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 
 public record BioimpedanceRequest(
-    String  athleteId,
+    String  cpfAhtlete,
     Double weight,
     Double height, 
     Integer bodyFatPercentage,

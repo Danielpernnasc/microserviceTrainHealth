@@ -55,22 +55,6 @@ public class ClinicalAnalysisController {
 
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<ClinicalAnalysis> getAnalysisClinicalbyId(
-         @PathVariable String id
-    ){
-        return ResponseEntity.ok(service.getAnalysisClinicalById(id));
-    }
-
-    @GetMapping("/athlete/{athleteId}")
-    public ResponseEntity<List<ClinicalAnalysis>> getAnalysisClinical(
-         @PathVariable String athleteId
-    ){
-        return ResponseEntity.ok(
-            service.getAnalysisClinical(athleteId)
-        );
-    }
-
     @GetMapping("/cpf/{cpf}")
     public List<ClinicalAnalysis> findByCpf(@PathVariable String cpf) {
         return service.getBioByCpf(cpf);

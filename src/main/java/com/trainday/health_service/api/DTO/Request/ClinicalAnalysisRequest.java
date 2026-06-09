@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.trainday.health_service.domain.models.enums.AnalysisStatus;
 
 public record ClinicalAnalysisRequest(
-    String athleteId,
+    String athleteCpf,
     // Hemograma
      Double hemoglobin,        // g/dL
      Double hematocrit,       // %

@@ -58,13 +58,6 @@ public class BioimpedanceController {
             .body(creatBioimpedance);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Bioimpedance> findById(
-        @PathVariable String id
-    ){
-        return ResponseEntity.ok(service.getBioById(id));
-    }
-
     @GetMapping("/cpf/{cpf}")
     public List<Bioimpedance> findByCpf(@PathVariable String cpf) {
         return service.getBioByCpf(cpf);

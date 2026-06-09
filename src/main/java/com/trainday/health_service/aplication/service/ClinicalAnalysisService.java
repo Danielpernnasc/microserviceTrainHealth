@@ -11,22 +11,25 @@ import com.trainday.health_service.domain.models.ClinicalAnalysis;
 import com.trainday.health_service.domain.repository.AthleteSnapshotRepository;
 import com.trainday.health_service.domain.repository.ClinicalAnalysisRepository;
 import com.trainday.health_service.infra.client.AthleteClient;
+import com.trainday.health_service.infra.client.AthleteClientService;
 
 @Service
 public class ClinicalAnalysisService {
 
     private final ClinicalAnalysisRepository repository;
-    private final AthleteClient athleteClient;
-    private final AthleteSnapshotRepository athleteRepository;
+        private final AthleteClient athleteClient;
+    private final AthleteClientService athleteclientService;
     private static final String AnalysisClinical_not_found = "Análise Clinicas não econtrada!";
 
     public ClinicalAnalysisService(
         ClinicalAnalysisRepository repository, 
-        AthleteSnapshotRepository athleteRepository,
-        AthleteClient athleteClient){
+        // AthleteSnapshotRepository athleteRepository,
+        AthleteClient athleteClient,
+        AthleteClientService athleteClientService, AthleteClientService athleteclientService){
         this.repository = repository;
-        this.athleteRepository = athleteRepository;
+        // this.athleteRepository = athleteRepository;
         this.athleteClient = athleteClient;
+        this.athleteclientService = athleteclientService;
      
     }
 
@@ -34,8 +37,8 @@ public class ClinicalAnalysisService {
     public ClinicalAnalysis createAnalysisClinical(ClinicalAnalysisRequest req, String token){
        
         AthleteSnapshotResponse athlete =
-                    athleteClient.findById(
-                            req.athleteId(),
+                    athleteClient.findByCpf(
+                            req.athleteCpf(),
                             token
                     );
 
@@ -49,7 +52,7 @@ public class ClinicalAnalysisService {
         athleteSnapshot.setHeight(athlete.height());
 
         ClinicalAnalysis clinical = new ClinicalAnalysis();
-        clinical.setAthleteId(req.athleteId());
+        clinical.setCpfAhtlete(req.athleteCpf());
         clinical.setAthlete(athleteSnapshot);
         clinical.setHemoglobin(req.hemoglobin());
         clinical.setHematocrit(req.hematocrit());
@@ -86,21 +89,27 @@ public class ClinicalAnalysisService {
         return repository.save(clinical);
     }
 
-    public ClinicalAnalysis getAnalysisClinicalById(String id){
-        return repository.findById(id)
-                  .orElseThrow(() -> new RuntimeException(AnalysisClinical_not_found  + id));
-    }
 
 
-    public List<ClinicalAnalysis> getAnalysisClinical(String athleteId){
-        return repository.findByAthleteId(athleteId);
+    public List<ClinicalAnalysis> getAnalysisClinical(String athleteCpf){
+          AthleteSnapshotResponse athlete = athleteclientService.findByCpf(athleteCpf);
+
+           if(athlete == null || athlete.cpf() == null){
+            throw new RuntimeException("Athlete not found");
+           }
+        return repository.findByAthleteCpf(athleteCpf);
               
     }
 
     public List<ClinicalAnalysis> getBioByCpf(String cpf){
-        AthleteSnapshot athlete = athleteRepository.findByCpf(cpf)
-             .orElseThrow(() -> new RuntimeException("Athlete not found"));
-        return repository.findByAthleteId(athlete.getCpf());
+           
+        AthleteSnapshotResponse athlete = athleteclientService.findByCpf(cpf);
+
+           if(athlete == null || athlete.cpf() == null){
+            throw new RuntimeException("Athlete not found");
+           }
+           return repository.findByAthleteCpf(athlete.cpf());
+
     }
 
 }

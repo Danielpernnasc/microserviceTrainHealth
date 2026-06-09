@@ -21,7 +21,7 @@ public class ClinicalAnalysis {
      @Id
     private String id;
 
-    private String athleteId;
+    private String cpfAhtlete;
     private AthleteSnapshot athlete;
 
     // Hemograma

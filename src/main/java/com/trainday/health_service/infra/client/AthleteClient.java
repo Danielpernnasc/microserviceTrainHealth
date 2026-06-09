@@ -14,9 +14,9 @@ import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
 
 public interface AthleteClient {
 
-        @GetMapping("/athlete/{id}")
-        AthleteSnapshotResponse findById(
-            @PathVariable String id,
+        @GetMapping("/athlete/cpf/{cpf}")
+        AthleteSnapshotResponse findByCpf(
+            @PathVariable String cpf,
             @RequestHeader("Authorization") String token);
 
       
