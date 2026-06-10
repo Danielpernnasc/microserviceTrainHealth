@@ -21,7 +21,7 @@ public class BioimpendanceService {
     private final BioimpedanceRepository repository;
     private final AthleteClient athleteClient;
     private final AthleteClientService athleteclientService;
-    private static final String Bio_not_found = "Biopedância não econtrada!";
+    private static final String Bio_not_found = "Bioimpedância não econtrada!";
 
     public BioimpendanceService(
         BioimpedanceRepository repository, 
@@ -36,15 +36,14 @@ public class BioimpendanceService {
    
 
     public Bioimpedance create(BioimpedanceRequest req, String token){
-        AthleteSnapshotResponse athlete =
-            athleteClient.findByCpf(
-                    req.cpfAhtlete(),
+        AthleteSnapshotResponse athlete = athleteClient.findByCpf(
+                    req.cpfAthlete(),
                     token
             );
 
         AthleteSnapshot athleteSnapshot = new AthleteSnapshot();
-        athleteSnapshot.setCpf(athlete.cpf());
         athleteSnapshot.setName(athlete.name());
+        athleteSnapshot.setCpf(athlete.cpf());
         athleteSnapshot.setAge(athlete.age());
         athleteSnapshot.setGender(athlete.gender());
         athleteSnapshot.setGenderIdentity(athlete.identity());
@@ -53,7 +52,7 @@ public class BioimpendanceService {
       
 
         Bioimpedance bio = new Bioimpedance();
-        bio.setCpfAhtlete(req.cpfAhtlete());
+        bio.setCpfAhtlete(req.cpfAthlete());
         bio.setAthlete(athleteSnapshot);
         bio.setWeight(req.weight());
         bio.setHeight(req.height());
@@ -155,6 +154,7 @@ public class BioimpendanceService {
     private Double calcTmb(Double weight, Double height){
         return (10 * weight) + (6.25 * height) - (5 * 30) + 5;
     }
+
 
     private Double calcGet(Double tmb, ActivityLevel level){
         return switch (level) {

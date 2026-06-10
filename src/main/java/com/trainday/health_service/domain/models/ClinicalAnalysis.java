@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Document(collection = "clinical_analysis")
 public class ClinicalAnalysis {
-     @Id
+    @Id
     private String id;
 
     private String cpfAhtlete;
@@ -68,12 +68,9 @@ public class ClinicalAnalysis {
     private String doctorCRM;
     private String observations;
 
-    
     @CreatedDate
     private LocalDateTime analysisDate;
-    
     private AnalysisStatus status;
-
- 
-
 }
+
+

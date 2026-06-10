@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum AnalysisStatus {
     PEDENDING("PENDENTE"),
-    COMPLETED("CONCLUIDO"),
+    COMPLETED("CONCLUÍDO"),
     ALTERED("ALTERADO");
 
     private final String state;

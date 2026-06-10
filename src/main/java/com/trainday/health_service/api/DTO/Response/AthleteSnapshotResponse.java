@@ -1,5 +1,8 @@
 package com.trainday.health_service.api.DTO.Response;
 
+import lombok.Builder;
+
+@Builder
 public record AthleteSnapshotResponse(
     String cpf,
     String name,
@@ -11,6 +14,5 @@ public record AthleteSnapshotResponse(
     Double weight
 ) {
 
-  
-   
 }
+

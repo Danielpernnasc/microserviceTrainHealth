@@ -2,8 +2,11 @@ package com.trainday.health_service.api.DTO.Request;
 
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 
+import lombok.Builder;
+
+@Builder
 public record BioimpedanceRequest(
-    String  cpfAhtlete,
+    String  cpfAthlete,
     Double weight,
     Double height, 
     Integer bodyFatPercentage,
@@ -12,4 +15,6 @@ public record BioimpedanceRequest(
     Double leanMass,  
     Double fatMass,
     ActivityLevel activityLevel
-) {}
+) {
+}
+

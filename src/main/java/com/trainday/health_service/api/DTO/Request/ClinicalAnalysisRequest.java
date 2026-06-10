@@ -3,7 +3,9 @@ package com.trainday.health_service.api.DTO.Request;
 import java.time.LocalDateTime;
 
 import com.trainday.health_service.domain.models.enums.AnalysisStatus;
+import lombok.Builder;
 
+@Builder
 public record ClinicalAnalysisRequest(
     String athleteCpf,
     // Hemograma
