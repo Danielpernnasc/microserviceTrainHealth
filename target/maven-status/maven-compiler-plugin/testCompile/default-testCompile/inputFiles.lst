@@ -1,0 +1,7 @@
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/HealthServiceApplicationTests.java
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/api/controller/BioimpedanceControllerTest.java
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/application/service/BioimpendanceServiceTest.java
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/application/service/ClinicalAnalysisServiceTest.java
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/domain/models/enums/ActivityLevelTest.java
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/domain/models/enums/AnalysisStatusTest.java
+/home/nascimento/JavaSpringBoot/Train_bodyBuilderCRM/microserviceTrainHealth/src/test/java/com/trainday/health_service/domain/models/enums/ConsultationStatusTest.java

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BioimpendanceService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.trainday.health_service.aplication.service</a> &gt; <span class="el_source">BioimpendanceService.java</span></div><h1>BioimpendanceService.java</h1><pre class="source lang-java linenums">package com.trainday.health_service.aplication.service;
+
+import java.util.List;
+
+
+import org.springframework.stereotype.Service;
+
+import com.trainday.health_service.api.DTO.Request.BioimpedanceRequest;
+import com.trainday.health_service.api.DTO.Response.AthleteSnapshotResponse;
+import com.trainday.health_service.domain.models.AthleteSnapshot;
+import com.trainday.health_service.domain.models.Bioimpedance;
+import com.trainday.health_service.domain.models.enums.ActivityLevel;
+
+import com.trainday.health_service.domain.repository.BioimpedanceRepository;
+import com.trainday.health_service.infra.client.AthleteClient;
+import com.trainday.health_service.infra.client.AthleteClientService;
+
+@Service
+public class BioimpendanceService {
+
+    private final BioimpedanceRepository repository;
+    private final AthleteClient athleteClient;
+    private final AthleteClientService athleteclientService;
+    private static final String Bio_not_found = &quot;Bioimpedância não econtrada!&quot;;
+
+    public BioimpendanceService(
+        BioimpedanceRepository repository, 
+        AthleteClient athleteClient,
+<span class="fc" id="L29">        AthleteClientService athleteClientService){</span>
+<span class="fc" id="L30">        this.repository = repository;</span>
+<span class="fc" id="L31">        this.athleteclientService = athleteClientService;</span>
+<span class="fc" id="L32">        this.athleteClient = athleteClient;</span>
+
+<span class="fc" id="L34">    }</span>
+
+   
+
+    public Bioimpedance create(BioimpedanceRequest req, String token){
+<span class="fc" id="L39">        AthleteSnapshotResponse athlete = athleteClient.findByCpf(</span>
+<span class="fc" id="L40">                    req.cpfAthlete(),</span>
+                    token
+            );
+
+<span class="fc" id="L44">        AthleteSnapshot athleteSnapshot = new AthleteSnapshot();</span>
+<span class="fc" id="L45">        athleteSnapshot.setName(athlete.name());</span>
+<span class="fc" id="L46">        athleteSnapshot.setCpf(athlete.cpf());</span>
+<span class="fc" id="L47">        athleteSnapshot.setAge(athlete.age());</span>
+<span class="fc" id="L48">        athleteSnapshot.setGender(athlete.gender());</span>
+<span class="fc" id="L49">        athleteSnapshot.setGenderIdentity(athlete.identity());</span>
+<span class="fc" id="L50">        athleteSnapshot.setWeight(athlete.weight());</span>
+<span class="fc" id="L51">        athleteSnapshot.setHeight(athlete.height());</span>
+      
+
+<span class="fc" id="L54">        Bioimpedance bio = new Bioimpedance();</span>
+<span class="fc" id="L55">        bio.setCpfAhtlete(req.cpfAthlete());</span>
+<span class="fc" id="L56">        bio.setAthlete(athleteSnapshot);</span>
+<span class="fc" id="L57">        bio.setWeight(req.weight());</span>
+<span class="fc" id="L58">        bio.setHeight(req.height());</span>
+<span class="fc" id="L59">        bio.setBodyFatPercentage(req.bodyFatPercentage());</span>
+<span class="fc" id="L60">        bio.setBodyLeanMassPercentage(req.bodyLeanMassPercentage());</span>
+<span class="fc" id="L61">        bio.setActivityLevel(req.activityLevel());</span>
+        
+<span class="fc" id="L63">        calculateAll(bio);</span>
+
+<span class="fc" id="L65">        return repository.save(bio);</span>
+    }
+
+
+
+    public Bioimpedance getBioById(String id){
+<span class="fc" id="L71">       return repository.findById(id)</span>
+<span class="fc" id="L72">                .orElseThrow(() -&gt; new RuntimeException(Bio_not_found  + id));</span>
+    }
+
+    public List&lt;Bioimpedance&gt; getBioByCpf(String cpf){
+  
+        
+<span class="fc" id="L78">     AthleteSnapshotResponse athlete =</span>
+<span class="fc" id="L79">        athleteclientService.findByCpf(cpf);</span>
+
+<span class="pc bpc" id="L81" title="1 of 4 branches missed.">      if (athlete == null || athlete.cpf() == null) {</span>
+<span class="fc" id="L82">        throw new RuntimeException(&quot;Athlete not found&quot;);</span>
+    }
+
+<span class="fc" id="L85">    return repository.findByAthleteCpf(athlete.cpf());</span>
+    }
+
+    public Bioimpedance patch(String id, Bioimpedance req){
+<span class="fc" id="L89">       Bioimpedance bio = repository.findById(id)</span>
+<span class="pc" id="L90">                .orElseThrow(() -&gt; new RuntimeException(Bio_not_found));</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if(req.getWeight() != null){</span>
+<span class="fc" id="L93">            bio.setWeight(req.getWeight());</span>
+        }
+
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if(req.getHeight() != null){</span>
+<span class="fc" id="L97">            bio.setHeight(req.getHeight());</span>
+        }
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if(req.getBodyFatPercentage() != null){</span>
+<span class="fc" id="L101">            bio.setBodyFatPercentage(req.getBodyFatPercentage());</span>
+        }
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if(req.getBodyLeanMassPercentage() != null){</span>
+<span class="fc" id="L105">            bio.setBodyLeanMassPercentage(req.getBodyLeanMassPercentage());</span>
+        }
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if(req.getFatMass() != null){</span>
+<span class="fc" id="L109">            bio.setFatMass(req.getFatMass());</span>
+        }
+<span class="fc" id="L111">        calculateAll(bio); </span>
+<span class="fc" id="L112">        return repository.save(bio);</span>
+    }
+
+    private void calculateAll(Bioimpedance bio){
+<span class="fc" id="L116">        System.out.println(&quot;BODY FAT: &quot; + bio.getBodyFatPercentage() + &quot;%&quot;);</span>
+<span class="fc" id="L117">        System.out.println(&quot;WEIGHT: &quot; + bio.getWeight());</span>
+
+<span class="fc" id="L119">        bio.setImc(calcImc(bio.getWeight(), bio.getHeight()));</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if(bio.getBodyFatPercentage() != null </span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">            &amp;&amp; bio.getBodyFatPercentage() &gt; 0) {</span>
+<span class="fc" id="L122">                bio.setLeanMass(</span>
+<span class="fc" id="L123">                    calcLeanMass(</span>
+<span class="fc" id="L124">                        bio.getWeight(),</span>
+<span class="fc" id="L125">                        bio.getBodyFatPercentage()</span>
+                    )
+                );
+<span class="fc" id="L128">                bio.setFatMass(</span>
+<span class="fc" id="L129">                    calcFatMass(</span>
+<span class="fc" id="L130">                        bio.getWeight(),</span>
+<span class="fc" id="L131">                        bio.getBodyFatPercentage()</span>
+                    )
+                );
+            }
+
+<span class="fc" id="L136">         bio.setTmb(calcTmb(bio.getWeight(),bio.getHeight()));</span>
+<span class="fc" id="L137">         bio.setGet(calcGet(bio.getTmb(),bio.getActivityLevel()));</span>
+
+<span class="fc" id="L139">    }</span>
+
+    private Double calcImc(Double weight, Double height){
+<span class="fc" id="L142">        double heightMeters = height / 100;</span>
+<span class="fc" id="L143">        return weight / (heightMeters * heightMeters);</span>
+    }
+
+    private Double calcLeanMass(Double weight, Integer fatPercentage){
+<span class="fc" id="L147">        return weight * (1 - (fatPercentage / 100.0));</span>
+    }
+
+    private Double calcFatMass(Double weight, Integer fatPercentage){
+<span class="fc" id="L151">        return weight * (fatPercentage / 100.0);</span>
+    }
+
+    private Double calcTmb(Double weight, Double height){
+<span class="fc" id="L155">        return (10 * weight) + (6.25 * height) - (5 * 30) + 5;</span>
+    }
+
+
+    private Double calcGet(Double tmb, ActivityLevel level){
+<span class="fc bfc" id="L160" title="All 5 branches covered.">        return switch (level) {</span>
+<span class="fc" id="L161">            case SEDENTARY -&gt; tmb * 1.2;</span>
+<span class="fc" id="L162">            case LIGHT -&gt; tmb * 1.375;</span>
+<span class="fc" id="L163">            case MODERATE -&gt; tmb * 1.55;</span>
+<span class="fc" id="L164">            case INTENSE -&gt; tmb * 1.725;</span>
+<span class="fc" id="L165">            case ATHLETE -&gt; tmb * 1.9;</span>
+        };
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
