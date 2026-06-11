@@ -1,0 +1,7 @@
+com/trainday/health_service/domain/models/enums/ActivityLevelTest.class
+com/trainday/health_service/HealthServiceApplicationTests.class
+com/trainday/health_service/application/service/ClinicalAnalysisServiceTest.class
+com/trainday/health_service/domain/models/enums/ConsultationStatusTest.class
+com/trainday/health_service/api/controller/BioimpedanceControllerTest.class
+com/trainday/health_service/application/service/BioimpendanceServiceTest.class
+com/trainday/health_service/domain/models/enums/AnalysisStatusTest.class
