@@ -13,12 +13,14 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.java: JDK isn't specified for module 'health-service'
 
 ### IntelliJ IDEA ###
-.idea
+*.idea
 *.iws
 *.iml
 *.ipr
+*Zone.Identifier
 
 ### NetBeans ###
 /nbproject/private/
