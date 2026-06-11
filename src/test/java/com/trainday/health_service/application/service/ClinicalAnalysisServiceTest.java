@@ -244,8 +244,6 @@ public class ClinicalAnalysisServiceTest {
             when(repository.findByAthleteCpf("999.999.999-99"))
                 .thenReturn(List.of(analysis));
 
-            System.out.println(service);
-            System.out.println(athleteclientService);
             when(athleteclientService.findByCpf("999.999.999-99"))
                     .thenReturn(response);
             List<ClinicalAnalysis> result = service.getAnalysisClinical("999.999.999-99");
