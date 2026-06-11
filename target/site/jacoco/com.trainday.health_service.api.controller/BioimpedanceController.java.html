@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BioimpedanceController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report"></a> &gt; <a href="index.source.html" class="el_package">com.trainday.health_service.api.controller</a> &gt; <span class="el_source">BioimpedanceController.java</span></div><h1>BioimpedanceController.java</h1><pre class="source lang-java linenums">package com.trainday.health_service.api.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.trainday.health_service.api.DTO.Request.BioimpedanceRequest;
+import com.trainday.health_service.aplication.service.BioimpendanceService;
+import com.trainday.health_service.domain.models.Bioimpedance;
+import com.trainday.health_service.infra.security.JwtService;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+
+@RestController
+@RequestMapping(&quot;/bioimpedance&quot;)
+@SecurityRequirement(name = &quot;bearerAuth&quot;)
+public class BioimpedanceController {
+
+    private final BioimpendanceService service;
+    private final JwtService jwtService;
+
+<span class="fc" id="L39">    private static final Logger log = LoggerFactory.getLogger(BioimpendanceService.class);</span>
+    
+    public BioimpedanceController(
+        BioimpendanceService service,
+        JwtService jwtService
+<span class="fc" id="L44">    ){</span>
+<span class="fc" id="L45">        this.service = service;</span>
+<span class="fc" id="L46">        this.jwtService = jwtService;</span>
+<span class="fc" id="L47">    }</span>
+
+    @PostMapping
+    public ResponseEntity&lt;Bioimpedance&gt; save(
+        @RequestBody BioimpedanceRequest req,
+        @RequestHeader(&quot;Authorization&quot;) String authHeader) {
+<span class="fc" id="L53">            log.info(&quot;Receive request to create bio: {}&quot;, req);</span>
+<span class="fc" id="L54">            String token = authHeader.substring(7);</span>
+<span class="fc" id="L55">            String athleteId = jwtService.extractEmail(token);</span>
+<span class="fc" id="L56">            Bioimpedance creatBioimpedance = service.create(req, athleteId);</span>
+<span class="fc" id="L57">               return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L58">            .body(creatBioimpedance);</span>
+    }
+
+    @GetMapping(&quot;/cpf/{cpf}&quot;)
+    public List&lt;Bioimpedance&gt; findByCpf(@PathVariable String cpf) {
+<span class="fc" id="L63">        return service.getBioByCpf(cpf);</span>
+    }
+    
+
+    @PatchMapping(&quot;/{id}&quot;) 
+    public ResponseEntity&lt;Bioimpedance&gt; patchBioimpedance(@PathVariable String id, @RequestBody Bioimpedance req){
+<span class="fc" id="L69">        Bioimpedance bio = service.patch(id, req);</span>
+<span class="fc" id="L70">        return ResponseEntity.ok(bio);</span>
+    }
+
+
+    
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

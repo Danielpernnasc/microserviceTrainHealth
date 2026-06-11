@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.trainday.health_service.api.controller.BioimpedanceControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.613 s -- in com.trainday.health_service.api.controller.BioimpedanceControllerTest
