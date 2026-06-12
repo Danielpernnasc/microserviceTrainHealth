@@ -19,7 +19,7 @@ public class ClinicalAnalysisService {
     private final ClinicalAnalysisRepository repository;
     private final AthleteClient athleteClient;
     private final AthleteClientService athleteclientService;
-    private static final String AnalysisClinical_not_found = "Análise Clinicas não econtrada!";
+
 
     public ClinicalAnalysisService(
             ClinicalAnalysisRepository repository,
@@ -41,8 +41,8 @@ public class ClinicalAnalysisService {
                     );
 
         AthleteSnapshot athleteSnapshot = new AthleteSnapshot();
-        athleteSnapshot.setCpf(athlete.cpf());
         athleteSnapshot.setName(athlete.name());
+        athleteSnapshot.setCpf(athlete.cpf());
         athleteSnapshot.setAge(athlete.age());
         athleteSnapshot.setGender(athlete.gender());
         athleteSnapshot.setGenderIdentity(athlete.identity());

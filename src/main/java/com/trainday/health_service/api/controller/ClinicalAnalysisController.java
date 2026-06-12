@@ -59,12 +59,7 @@ public class ClinicalAnalysisController {
 
     @GetMapping("/cpf/{cpf}")
     public List<ClinicalAnalysis> findByCpf(@PathVariable String cpf) {
-
-
-
-
         return service.getAnalysisClinical(cpf);
-
     }
 
     

@@ -4,8 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record AthleteSnapshotResponse(
-    String cpf,
     String name,
+    String cpf,
     String email,
     Integer age,
     String gender,

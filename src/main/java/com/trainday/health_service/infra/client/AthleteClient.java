@@ -17,7 +17,8 @@ public interface AthleteClient {
         @GetMapping("/athlete/cpf/{cpf}")
         AthleteSnapshotResponse findByCpf(
             @PathVariable String cpf,
-            @RequestHeader("Authorization") String token);
+            @RequestHeader("Authorization")
+            String token);
 
       
     
