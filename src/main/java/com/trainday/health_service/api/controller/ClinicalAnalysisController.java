@@ -61,7 +61,7 @@ public class ClinicalAnalysisController {
     public List<ClinicalAnalysis> findByCpf(@PathVariable String cpf) {
         return service.getAnalysisClinical(cpf);
     }
-    
+
     
 
 

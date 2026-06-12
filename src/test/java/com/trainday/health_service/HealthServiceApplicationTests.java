@@ -9,8 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 class HealthServiceApplicationTests {
 
 	@Test
-	void mainShouldRun() {
-		assertTrue(true);
-	}
+    void shouldLoadContext() {
+        assertNotNull(new HealthServiceApplication());
+    }
 
 }

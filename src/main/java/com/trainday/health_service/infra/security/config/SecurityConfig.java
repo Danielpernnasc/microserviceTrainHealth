@@ -15,13 +15,11 @@ import com.trainday.health_service.infra.security.JwtAuthFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-        private static final String HEALTYSERVICEPOSTBIO = "/healty-service/bioimpedance";
-        private static final String HEALTYSERVICEGETBIO = "/healty-service/bioimpedance/*";
-        private static final String HEALTYSERVICEPATCH = "/healty-service/bioimpedance/**";
-        private static final String HEALTYSERVICEPUT = "/healty-service/bioimpedance/*";
-        // private static final String TRAIN_SCHEDULE_EXERCISE = "/train/my-trains/*/schedule/*/exercise/*";
-        // private static final String TRAIN_TEMPLATES = "/trainTemplate/templates";
-        // private static final String APPLY_TRAIN_TEMPLATE = "/trainTemplate/templates/*/apply";
+        private static final String HEALTYSERVICEPOSTBIO = "/bioimpedance";
+        private static final String HEALTYSERVICEGETBIO = "/bioimpedance/**";
+        private static final String HEALTYSERVICEPATCHBIO = "/bioimpedance/**";
+        private static final String HSANALYSISCLINALPOST = "/clinicalAnalysis";
+        private static final String HSANALYSISCLINICALGET = "/clinicalAnalysis/**";
 
    private final JwtAuthFilter jwtAuthFilter;
 
@@ -47,8 +45,9 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.POST, HEALTYSERVICEPOSTBIO).authenticated()
                 .requestMatchers(HttpMethod.GET, HEALTYSERVICEGETBIO).permitAll()
-                .requestMatchers(HttpMethod.PATCH, HEALTYSERVICEPATCH).authenticated()
-                .requestMatchers(HttpMethod.PUT, HEALTYSERVICEPUT).authenticated()
+                .requestMatchers(HttpMethod.PATCH, HEALTYSERVICEPATCHBIO).authenticated()
+                .requestMatchers(HttpMethod.POST, HSANALYSISCLINALPOST).authenticated()
+                .requestMatchers(HttpMethod.GET, HSANALYSISCLINICALGET).permitAll()
 
 
                 .anyRequest().authenticated()

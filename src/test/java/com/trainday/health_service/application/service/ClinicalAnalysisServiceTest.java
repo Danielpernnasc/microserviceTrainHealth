@@ -190,54 +190,8 @@ public class ClinicalAnalysisServiceTest {
 
         ClinicalAnalysis analysis = new ClinicalAnalysis();
             //Atleta
-            analysis.setId("1");
+
             analysis.setCpfAhtlete("999.999.999-99");
-            //Hemograma
-            analysis.setHemoglobin(15.2);
-            analysis.setHematocrit(45.8);
-            analysis.setRedBloodCells(5.1);
-            analysis.setWhiteBloodCells(7.2);
-            analysis.setPlatelets(250.0);
-
-            //Glicemia
-            analysis.setFastingGlucose(88.0);
-            analysis.setHba1c(5.4);
-
-            //Hormônios
-            analysis.setTotalTestosterone(650.0);
-            analysis.setFreeTestosterone(18.5);
-            analysis.setCortisol(14.2);
-            analysis.setTsh(2.1);
-            analysis.setT4(1.3);
-
-            // Perfil lipídico
-            analysis.setTotalCholesterol(180.0);
-            analysis.setHdl(55.0);
-            analysis.setLdl(105.0);
-            analysis.setTriglycerides(95.0);
-
-            // Função renal e hepática
-            analysis.setCreatinine(1.0);
-            analysis.setTgo(28.0);
-            analysis.setTgp(32.0);
-
-            // Vitaminas e minerais
-            analysis.setVitaminD(42.5);
-            analysis.setVitaminB12(550.0);
-            analysis.setIron(95.0);
-            analysis.setFerritin(120.0);
-
-            // Proteínas
-            analysis.setTotalProtein(7.1);
-            analysis.setAlbumin(4.5);
-            analysis.setCreatineKinase(180.0);
-
-            // Informações médicas
-            analysis.setDoctorName("Dr. João Silva");
-            analysis.setDoctorCRM("CRM/SP 123456");
-            analysis.setObservations("Exames dentro dos parâmetros esperados para atleta recreativo.");
-            analysis.setAnalysisDate(now);
-            analysis.setStatus(AnalysisStatus.COMPLETED);
 
 
 

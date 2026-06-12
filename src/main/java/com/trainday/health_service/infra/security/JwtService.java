@@ -27,6 +27,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+     public Key testgetKey(){
+        return getKey();
+    }
+
     public String generateToken(
         String id,
         String userId,
