@@ -21,7 +21,8 @@ public class BioimpendanceService {
     private final BioimpedanceRepository repository;
     private final AthleteClient athleteClient;
     private final AthleteClientService athleteclientService;
-    private static final String Bio_not_found = "Bioimpedância não econtrada!";
+    private static final String Bio_not_found = "Bioimpedância não encontrada!";
+    private static final String ATHLETE_NOT_FOUND = "Athlete not found!";
 
     public BioimpendanceService(
         BioimpedanceRepository repository, 
@@ -79,7 +80,7 @@ public class BioimpendanceService {
         athleteclientService.findByCpf(cpf);
 
       if (athlete == null || athlete.cpf() == null) {
-        throw new RuntimeException("Athlete not found");
+        throw new RuntimeException(ATHLETE_NOT_FOUND);
     }
 
     return repository.findByAthleteCpf(athlete.cpf());

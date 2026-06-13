@@ -1,6 +1,5 @@
 package com.trainday.health_service.aplication.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,17 +19,18 @@ public class ClinicalAnalysisService {
     private final AthleteClient athleteClient;
     private final AthleteClientService athleteclientService;
 
+    private static final String ATHLETE_NOT_FOUND = "Athlete not found!";
 
     public ClinicalAnalysisService(
             ClinicalAnalysisRepository repository,
             AthleteClient athleteClient,
-            AthleteClientService athleteclientService) {
+            AthleteClientService athleteclientService
+        ) {
 
         this.repository = repository;
         this.athleteClient = athleteClient;
         this.athleteclientService = athleteclientService;
     }
-
 
     public ClinicalAnalysis createAnalysisClinical(ClinicalAnalysisRequest req, String token){
        
@@ -102,7 +102,7 @@ public class ClinicalAnalysisService {
         AthleteSnapshotResponse athlete = athleteclientService.findByCpf(athleteCpf);
 
            if(athlete == null || athlete.cpf() == null){
-            throw new RuntimeException("Athlete not found!");
+            throw new RuntimeException(ATHLETE_NOT_FOUND);
            }
            return repository.findByAthleteCpf(athlete.cpf());
 

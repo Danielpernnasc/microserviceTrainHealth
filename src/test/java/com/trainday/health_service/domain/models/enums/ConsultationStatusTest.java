@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.trainday.health_service.domain.models.enums.ConsultationStatus;
-
 public class ConsultationStatusTest {
 
     @Test
