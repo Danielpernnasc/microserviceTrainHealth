@@ -21,6 +21,7 @@ target/
 *.iml
 *.ipr
 *Zone.Identifier
+*.env
 
 ### NetBeans ###
 /nbproject/private/
@@ -35,3 +36,4 @@ build/
 
 ### VS Code ###
 .vscode/
+.env
