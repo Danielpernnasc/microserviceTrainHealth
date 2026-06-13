@@ -21,10 +21,12 @@ target/
 *.iml
 *.ipr
 *Zone.Identifier
+*.env
 
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
+
 /dist/
 /nbdist/
 /.nb-gradle/
@@ -34,3 +36,4 @@ build/
 
 ### VS Code ###
 .vscode/
+.env
