@@ -3,7 +3,6 @@ package com.trainday.health_service.api.controller;
 import com.trainday.health_service.api.DTO.Request.ClinicalAnalysisRequest;
 import com.trainday.health_service.aplication.service.ClinicalAnalysisService;
 import com.trainday.health_service.domain.models.ClinicalAnalysis;
-import com.trainday.health_service.domain.models.enums.AnalysisStatus;
 import com.trainday.health_service.infra.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

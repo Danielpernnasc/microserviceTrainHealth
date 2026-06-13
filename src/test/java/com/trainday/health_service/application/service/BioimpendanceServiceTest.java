@@ -22,7 +22,6 @@ import com.trainday.health_service.domain.models.Bioimpedance;
 import com.trainday.health_service.domain.models.enums.ActivityLevel;
 import com.trainday.health_service.domain.repository.BioimpedanceRepository;
 import com.trainday.health_service.infra.client.AthleteClient;
-import org.mockito.stubbing.OngoingStubbing;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -145,10 +144,10 @@ public class BioimpendanceServiceTest {
                 );
 
         assertEquals(
-                "Bioimpedância não econtrada!123",
+                "Bioimpedância não encontrada!123",
                 exception.getMessage()
         );
-
+ 
         verify(repository)
                 .findById("123");
     }
@@ -211,7 +210,7 @@ public class BioimpendanceServiceTest {
                 );
 
         assertEquals(
-                "Athlete not found",
+                "Athlete not found!",
                 exception.getMessage()
         );
 
